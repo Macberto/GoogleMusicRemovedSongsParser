@@ -1,5 +1,5 @@
 # Google Music Removed Songs Parser
-Google Music will randomly remove songs from their streaming service.  They will never show you which songs have been removed/expired.
+Google Music will randomly remove songs from their streaming service and they will never show you which songs have been removed/expired.
 
 I got very annoyed by that, so I created this program to find which songs were removed from your Google Music library by searching all the .csv files provided by your own account data from Google Takeout (https://takeout.google.com/).
 
