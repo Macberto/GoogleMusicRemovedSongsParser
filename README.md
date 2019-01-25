@@ -12,13 +12,13 @@ How to get your Google Play Music data:
 
 3. Click the "Next" button
 
-4. Select how you want to download your data (the default settigns should be fine)
+4. Select how you want to download your data (the default settings should be fine)
 
 5. Click on "Create Archive" button
 
 6. Wait a few minutes until your data is downloaded
 
-7. Extract your downloade .zip file.  Inside of it you should see a Google Play Music folder that contains sub-folders with a bunch of 
+7. Extract your downloaded .zip file.  Inside of it you should see a Google Play Music folder that contains sub-folders with a bunch of 
 .csv files for your Playlists, Radio Stations and Tracks
 
 
