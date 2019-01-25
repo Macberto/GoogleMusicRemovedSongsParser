@@ -1,5 +1,5 @@
 #! python3
-# Google Music Removed Songs Parser
+# Google Music Removed Songs Parser v1.1
 # Parses all .csv files in a specified folder for songs that have been tagged as "Removed".
 # Writes out a .csv file that lists the removed songs.
 # These .csv files should be provided by Google Takeout (takeout.google.com)
@@ -12,7 +12,7 @@ from tkinter import filedialog
 
 gui = tkinter.Tk()
 gui.geometry("1000x128")
-gui.title("Google Music Removed Songs Parser")
+gui.title("Google Music Removed Songs Parser v1.1")
 
 folders = {"sourceFolder": None, "destinationFolder": None }
 
@@ -32,7 +32,6 @@ def startSearching(outputLabel):
     contains all the songs it found that have been tagged as removed.
     """
     directory = os.listdir(folders["sourceFolder"])
-    removedColumnIndex = None
     totalRemoved = 0
     removedSongsRows = []
 
@@ -43,20 +42,18 @@ def startSearching(outputLabel):
         
         # Read the csv file
         csvFileObj = open( os.path.join(folders["sourceFolder"], csvFileName) )
-        readerObj = csv.reader(csvFileObj)
+        readerObj = csv.DictReader(csvFileObj)
 
         for row in readerObj:
-            # We need to find where the "Removed" column is,
-            # since we start out not knowing that.
-            if None == removedColumnIndex and 1 == readerObj.line_num:
-                removedColumnIndex = row.index("Removed")
-                removedSongsRows.append(row)
+            # Make sure to save the column names only once
+            if [] == removedSongsRows:
+                removedSongsRows.append(row.keys())
             
-            if 2 == readerObj.line_num and "Yes" == row[removedColumnIndex]:
+            if "" != row["Title"] and "" != row["Artist"] and "Yes" == row["Removed"]:
                 totalRemoved += 1
-                removedSongsRows.append(row)
+                removedSongsRows.append(row.values())
         csvFileObj.close()
-    
+
     if(totalRemoved > 0):
         # Write out a csv file that only contains the songs removed
         with open( os.path.join(folders["destinationFolder"], fileNameEntry.get() + ".csv"), "w", newline='') as csvRemovedFile:
@@ -99,4 +96,4 @@ resultsLabel.grid(column=0, columnspan=2,row=3)
 searchButton = Button(gui, text="Search", command=lambda *args: startSearching(resultsLabel))
 searchButton.grid(column=1, row=4)
 
-gui.mainloop()            
+gui.mainloop()
